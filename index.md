@@ -8,14 +8,14 @@ Research project at UCSD for DSC80 exploring predictive relationships between ma
 
 ## Cleaning and EDA
 
-<iframe src="assets/10-80-enrollment.html" width=800 height=600 frameBorder=0></iframe>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean bibendum placerat lorem, vitae convallis sem porta et. Aenean dapibus pharetra commodo. Etiam a massa sit amet nulla cursus interdum. Phasellus magna justo, pretium eu ultrices sed, eleifend id diam. 
 
 ## Assessment of Missingness
 
-- a
+- Aliquam ornare velit molestie, venenatis quam eu, egestas est. Suspendisse nec rutrum lorem. Nam condimentum sagittis nibh quis porttitor. Mauris volutpat quam in lectus bibendum maximus ac id sapien.
 
 ```py
-print(counts[['Quarter', 'Count']].head().to_markdown(index=False))
+print(counts[['Quarter', 'Count']].head().to_html(index=False))
 ```
 
 | Quarter     |   Count |
