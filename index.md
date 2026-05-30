@@ -2,22 +2,31 @@
 layout: homepage
 ---
 
-## About Me
+## Introduction
 
-I am a Ph.D. student at ...
+Research project at UCSD for DSC80 exploring predictive relationships between macronutrients in recipes. Analysis performed with linear correlation modeling, EDA, and regression pipelines.
 
-## Research Interests
+## Cleaning and EDA
 
-- **Computer Vision:** image recognition, image generation, video captioning
-- **Machine Learning:** meta-learning, incremental learning, transfer learning
+<iframe src="assets/10-80-enrollment.html" width=800 height=600 frameBorder=0></iframe>
 
-## News
+## Assessment of Missingness
 
-- **[Feb. 2020]** Our paper about incremental learning is accepted to CVPR 2020.
-- **[Feb. 2020]** We will host the ACM Multimedia Asia 2020 conference in Singapore!
-- **[Sept. 2019]** Our paper about few-shot learning is accepted to NeurIPS 2019.
-- **[Mar. 2019]** Our paper about few-shot learning is accepted to CVPR 2019.
+- a
 
-{% include_relative _includes/publications.md %}
+```py
+print(counts[['Quarter', 'Count']].head().to_markdown(index=False))
+```
 
-{% include_relative _includes/services.md %}
+| Quarter     |   Count |
+|:------------|--------:|
+| Fall 2020   |       3 |
+| Winter 2021 |       2 |
+| Spring 2021 |       6 |
+| Summer 2021 |       4 |
+| Fall 2021   |      55 |
+
+## Hypothesis Testing
+
+
+---
