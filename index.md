@@ -48,19 +48,21 @@ The following table is the first 5 rows of the cleaned dataframe, with most of t
 **Univariate Analysis**
 This analysis examines the distribution of recipe steps. The histogram shows a right-skewed distribution, with a cluster of around 5-9 steps in recipes, indicating most recipes are usually simpler with few complex recipes.
 
-<iframe src="{{ '/assets/plots/nsteps_distribution.html' | relative_url }}"
-        width="100%"
-        height="600"
-        frameborder="0">
+<iframe
+    src="{{ '/assets/plots/nsteps_distribution.html' | relative_url }}"
+    width="100%"
+    height="500"
+    style="border:none;">
 </iframe>
 
 **Bivariate Analysis**
 This analysis examines the relationship between recipe steps and protein content. The binned histogram shows that average protein content are spread across the number of recipe steps, with a rise at around 50 recipe steps for the highest protein levels.
 
-<iframe src="{{ '/assets/plots/avg_protein_step_distribution.html' | relative_url }}"
-        width="100%"
-        height="600"
-        frameborder="0">
+<iframe
+    src="{{ '/assets/plots/avg_protein_step_distribution.html' | relative_url }}"
+    width="100%"
+    height="500"
+    style="border:none;">
 </iframe>
 
 **Interesting Aggregates**
@@ -97,7 +99,7 @@ Next, rating and minutes.
 <iframe
     src="{{ '/assets/plots/fig_mar_mins_distribution.html' | relative_url }}"
     width="100%"
-    height="400"
+    height="500"
     style="border:none;">
 </iframe>
 
@@ -140,15 +142,15 @@ To evaluate my model, I will use the metric **RMSE (Root Mean Squared Error)**, 
 
 ## Baseline Model
 
-The model I created is a baseline linear regression model that predicts recipe calorie content using two quantitative features (*n_steps*) and (*minutes*). Both features are quantitative continuous variables that  do not require encoding transformations, and therefore, can be used as-is. No ordinal or nominal features were included in this baseline model. Linear regression is appropriate because the coefficients can adjust for scale differences without standardization/
+The model I created is a baseline linear regression model that predicts recipe calorie content using two quantitative features (*n_steps*) and (*minutes*). Both features are **quantitative** continuous variables that do not require encoding transformations, and therefore, can be used as-is. No **ordinal** or **nominal** features were included in this baseline model. Linear regression is appropriate because the coefficients can adjust for scale differences without standardization.
 
-The model achieved an RMSE of 310.03 calories and an R² of 0.0435, meaning the model explains only approximately 4% of the variance in calorie content. The predicted average calorie amount across test recipes was 374 calories.
+**Result of the Baseline Model Performance**: It achieved an RMSE = 310.03 calories and an R-squared = 0.0435. The predicted average calorie amount across test recipes was 374 calories. The model explained only ~4% of the variance in calorie content, and as such, I do not believe this current model is "good" for practical use. The extremely low R-squared value indicates that using only thse two features is insufficient to predicting calorie content. 
 
-I do not believe this current model is "good" for practical use. While the RMSE of 310 calories might be acceptable for some applications (given that many recipes fall in the 200-600 calorie range), the extremely low R² value (0.0435) indicates that n_steps and minutes alone capture very little of the variation in recipe calorie content. This weak performance is expected, as preparation time and step count are indirect proxies for calorie density at best—a short, simple recipe could be calorie-dense (e.g., fried foods), while a long, complex recipe could be low-calorie (e.g., elaborate vegetable dishes). The model serves as a reasonable baseline for comparison against more sophisticated feature-engineered models but is insufficient for accurate calorie prediction on its own.
+The model serves as a reasonable baseline for comparison against a more feature-engineered model and insufficient for accurate calorie prediction alone.
 
 ## Final Model
 
-Lorem
+**Result of the Final Model Performance**: 
 
 ## Fairness Analysis
 
