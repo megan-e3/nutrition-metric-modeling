@@ -36,15 +36,27 @@ The number of rows in the merged dataset is 234429. The relevant columns used in
 - The proportion of recipes with carbohydrates (PDV) > 181.8 was calculated to be extremely small (only 0.01% of the dataset). Considering adults require approximately 275g of carbohydrates per day (1 PDV = 2.75g), 500g of carbs = 500 / 2.75 = 181.8 PDV.
 
 The following table is the first 5 rows of the cleaned dataframe, with most of the columns omitted due to space constraints.
-| name | id | minutes | contributor_id | sodium (PDV) | protein (PDV) | saturated fat (PDV) | carbohydrates (PDV) |
-|------|----|---------|----------------|--------------|---------------|---------------------|---------------------|
+| name | id | minutes | contributor_id | sodium_PDV | protein_PDV | saturated_fat_PDV | carbohydrates_PDV |
+| --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 brownies in the world best ever | 333281 | 40 | 985201 | 3.0 | 3.0 | 19.0 | 6.0 |
 | 1 in canada chocolate chip cookies | 453467 | 45 | 1848091 | 22.0 | 13.0 | 51.0 | 26.0 |
 | 412 broccoli casserole | 306168 | 40 | 50969 | 32.0 | 22.0 | 36.0 | 3.0 |
 | 412 broccoli casserole | 306168 | 40 | 50969 | 32.0 | 22.0 | 36.0 | 3.0 |
 | 412 broccoli casserole | 306168 | 40 | 50969 | 32.0 | 22.0 | 36.0 | 3.0 |
 
-<iframe src="/assets/plots/nsteps_distribution.html" width="100%" height="600px" frameborder="0"></iframe>
+**Univariate Analysis**
+This analysis examines the distribution of recipe steps. The histogram shows a right-skewed distribution, with a cluster of around 5-9 steps in recipes, indicating most recipes are usually simpler with few complex recipes.
+
+<iframe src="{{ '/assets/plots/nsteps_distribution.html' | relative_url }}"
+        width="100%"
+        height="600"
+        frameborder="0">
+</iframe>
+
+**Bivariate Analysis**
+This analysis examines the relationship between recipe steps and protein content. The binned histogram shows that average protein content are spread across the number of recipe steps, with a rise at around 50 recipe steps for the highest protein levels.
+
+<iframe src="/assets/plots/avg_protein_step_distribution.html" width="100%" height="600px" frameborder="0"></iframe>
 
 ## Assessment of Missingness
 
