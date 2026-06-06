@@ -95,7 +95,7 @@ Next, rating and minutes.
 - Test Statistic / Significance Level: Same as the previous.
 
 <iframe src="{{ '/assets/plots/fig_mar_mins_distribution.html' | relative_url }}"
-        style="width: 100%; max-width: 700px; height: 400px;"
+        style="width: 100%; max-width: 500px; height: 320px;"
         frameborder="0">
 </iframe>
 
