@@ -58,6 +58,16 @@ This analysis examines the relationship between recipe steps and protein content
 
 <iframe src="/assets/plots/avg_protein_step_distribution.html" width="100%" height="600px" frameborder="0"></iframe>
 
+**Interesting Aggregates**
+Recipe steps were grouped into bins (1-5, 6-10, 11-15, and 16+) to aggregate and compare the mean, median, standard deviation, and count of protein content, along with the average number of steps within each bin.
+
+| steps_bin   |   ('protein (PDV)', 'mean') |   ('protein (PDV)', 'median') |   ('protein (PDV)', 'std') |   ('protein (PDV)', 'count') |   ('n_steps', 'mean') |
+|:------------|----------------------------:|------------------------------:|---------------------------:|-----------------------------:|----------------------:|
+| 1-5         |                     20.4762 |                             9 |                    27.9319 |                        54011 |               3.68762 |
+| 6-10        |                     31.4523 |                            18 |                    33.7461 |                        91961 |               7.92724 |
+| 11-15       |                     36.1451 |                            23 |                    36.3903 |                        50412 |              12.6659  |
+| 16+         |                     41.1711 |                            28 |                    39.2327 |                        34687 |              21.4112  |
+
 ## Assessment of Missingness
 
 Lorem
