@@ -94,9 +94,11 @@ Next, rating and minutes.
 - Alternate Hypothesis: The missingness of the rating column does depend on the recipe's minutes to prepare recipe.
 - Test Statistic / Significance Level: Same as the previous.
 
-<iframe src="{{ '/assets/plots/fig_mar_mins_distribution.html' | relative_url }}"
-        style="width: 100%; max-width: 500px; height: 320px;"
-        frameborder="0">
+<iframe
+    src="{{ '/assets/plots/fig_mar_mins_distribution.html' | relative_url }}"
+    width="100%"
+    height="400"
+    style="border:none;">
 </iframe>
 
 However, the test for dependency on minutes failed to reject the null hypothesis (p > 0.05). Preparation time likely does not differ between missing and observed rating groups, since rating missingness is associated with recipe complexity, such as number of steps, but not the time needed to make the meal. This supports handling missing ratings as potentially NMAR with respect to recipe structure.
@@ -138,7 +140,11 @@ To evaluate my model, I will use the metric **RMSE (Root Mean Squared Error)**, 
 
 ## Baseline Model
 
-Lorem
+The model I created is a baseline linear regression model that predicts recipe calorie content using two quantitative features (*n_steps*) and (*minutes*). Both features are quantitative continuous variables that  do not require encoding transformations, and therefore, can be used as-is. No ordinal or nominal features were included in this baseline model. Linear regression is appropriate because the coefficients can adjust for scale differences without standardization/
+
+The model achieved an RMSE of 310.03 calories and an R² of 0.0435, meaning the model explains only approximately 4% of the variance in calorie content. The predicted average calorie amount across test recipes was 374 calories.
+
+I do not believe this current model is "good" for practical use. While the RMSE of 310 calories might be acceptable for some applications (given that many recipes fall in the 200-600 calorie range), the extremely low R² value (0.0435) indicates that n_steps and minutes alone capture very little of the variation in recipe calorie content. This weak performance is expected, as preparation time and step count are indirect proxies for calorie density at best—a short, simple recipe could be calorie-dense (e.g., fried foods), while a long, complex recipe could be low-calorie (e.g., elaborate vegetable dishes). The model serves as a reasonable baseline for comparison against more sophisticated feature-engineered models but is insufficient for accurate calorie prediction on its own.
 
 ## Final Model
 
