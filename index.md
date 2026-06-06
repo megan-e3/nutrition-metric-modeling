@@ -58,11 +58,11 @@ This analysis examines the distribution of recipe steps. The histogram shows a r
 This analysis examines the relationship between recipe steps and protein content. The binned histogram shows that average protein content are spread across the number of recipe steps, with a rise at around 50 recipe steps for the highest protein levels.
 
 <iframe
-    src="{{ '/assets/plots/avg_protein_step_distribution.html' | relative_url }}"
-    width="100%"
-    height="450"
-    style="border:none;">
-</iframe>
+  src="{{ '/assets/plots/avg_protein_step_distribution.html' | relative_url }}"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 **Interesting Aggregates**
 Recipe steps were grouped into bins (1-5, 6-10, 11-15, and 16+) to aggregate and compare the mean, median, standard deviation, and count of protein content, along with the average number of steps within each bin.
@@ -96,11 +96,11 @@ Next, rating and minutes.
 - Test Statistic / Significance Level: Same as the previous.
 
 <iframe
-    src="{{ '/assets/plots/fig_mar_mins_distribution.html' | relative_url }}"
-    width="100%"
-    height="450"
-    style="border:none;">
-</iframe>
+  src="{{ '/assets/plots/fig_mar_mins_distribution.html' | relative_url }}"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 However, the test for dependency on minutes failed to reject the null hypothesis (p > 0.05). Preparation time likely does not differ between missing and observed rating groups, since rating missingness is associated with recipe complexity, such as number of steps, but not the time needed to make the meal. This supports handling missing ratings as potentially NMAR with respect to recipe structure.
 
