@@ -80,7 +80,7 @@ Recipe steps were grouped into bins (1-5, 6-10, 11-15, and 16+) to aggregate and
 After analyzing missingness across the entire dataset, only the rating column contained a non-trivial proportion of missing values (~6.3%). I believe *rating* is "**NMAR**" because the probability of a missing rating likely depends on the value itself. Users who had a negative or neutral experience to the recipe may be less motivated to leave a rating compared to people who loved the recipe. To make this "MAR," instead of "NMAR," additional data like whether the user saved the recipe and left a review without a numerical rating would be needed to help explain the missingness.
 
 **Missingness Dependency** 
-Missingness Dependency was analyzed and tested for rating's potential dependency on `n_steps` and `minutes`.
+Missingness Dependency was analyzed and tested for rating's potential dependency on *n_steps* and *minutes*.
 
 First, rating and n_steps.
 - Null Hypothesis: The missingness of the rating column does not depend on the recipe's number of steps.
