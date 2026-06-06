@@ -51,7 +51,7 @@ This analysis examines the distribution of recipe steps. The histogram shows a r
 <iframe
     src="{{ '/assets/plots/nsteps_distribution.html' | relative_url }}"
     width="100%"
-    height="500"
+    height="450"
     style="border:none;">
 </iframe>
 
@@ -61,7 +61,7 @@ This analysis examines the relationship between recipe steps and protein content
 <iframe
     src="{{ '/assets/plots/avg_protein_step_distribution.html' | relative_url }}"
     width="100%"
-    height="500"
+    height="450"
     style="border:none;">
 </iframe>
 
@@ -99,7 +99,7 @@ Next, rating and minutes.
 <iframe
     src="{{ '/assets/plots/fig_mar_mins_distribution.html' | relative_url }}"
     width="100%"
-    height="500"
+    height="450"
     style="border:none;">
 </iframe>
 
@@ -150,10 +150,40 @@ The model serves as a reasonable baseline for comparison against a more feature-
 
 ## Final Model
 
-**Result of the Final Model Performance**: 
+In addition to the previous two features, I engineered two new features from the *total fat (PDV)* and *carbohydrates (PDV)* columns:
+
+1. *fat_carb_ratio*
+- Calculated from the ratio of fat calories to carbohydrate calories with +1 added to the denominator to avoid a division by zero. This feature acts as a balance for the macronutrients, especially when recipes with different ratios of fat-to-carbs can result in the same total calories. For example, a high-fat, low-carb recipe and a low-fat, high-carb recipe may have the same calorie count, but their macronutrient ratios differ, which may be useful for prediction.
+
+2. *carb_quantile*
+- By applying a quantile transformation to the *carbs_calories (#)* column, which reduces skew, and map the distribution to uniform. This transformation is useful for tree models, such as Random Forest because it reduces the effect of extreme outliers for the model to create patterns that aren't influenced by outliers.
+
+**Modeling Algorithm Used**: I chose a ***RandomForestRegressor*** to analyze non-linear feature relationships to predict nutritional trends. 
+
+Using ***GridSearchCV***, I tuned two hyperparameters:
+- *max_depth* to prevent overfitting.
+- *min_samples_split* for the min number of samples.
+
+The optimal hyperparameters found were max_depth=25 and min_samples_split=5, which suggested deep trees with frequent splits were appropriate for this large dataset.
+
+**Result of the Final Model Performance**: With a more complex pipeline and optimal hyperparameters, this final model explains nearly all variance in calorie content, achieving an RMSE = 41.08 calories and an R-squared = 0.9831, a large improvement over the baseline model's RMSE and R-squared. Due to better engineered features and a flexible modeling algorithm, the final model is much more effective at model at predicting calorie content in recipes.
 
 ## Fairness Analysis
 
-Lorem
+For the fairness analysis, I looked at the following question: "Does my final model perform worse for recipes with higher step counts than it does for recipes with lower step counts?"
+
+Splitting the groups into higher and lower step counts, I created **Group X**, higher step counts, consisting of recipes with more than 10 steps, while **Group Y**, lower step counts, consists of recipes with less than or equal to 10 steps.
+
+**Null Hypothesis**: My model is fair and its RMSE for low-step and high-step recipes is roughly the same. Any differences are due to random chance.
+
+**Alternative Hypothesis**: My model is unfair and its RMSE for recipes with higher step counts is higher than for smaller recipes, or less recipe steps.
+
+**Test Statistic**: Absolute difference in RMSE for calorie content between recipes with high and low step amounts.
+
+**Significance Level**: α = 0.05
+
+I chose *RMSE (Root Mean Squared Error)* as the **evaluation metric** because it measures the magnitude of prediction errors in calories, which was the original units, and supports comparing model performance across groups.
+
+**Result of the Fairness Analysis**: The permutation test resulted in a p-value that was above the signifance level at 0.36. My model failed to reject the null hypothesis, making my model fair against high- or low-step recipes and suggesting that there is no statistically significant evidence that the final model performs worse for recipes with higher step counts compared to lower step counts. Any observed differences in RMSE may be due to random change than due to unfairness.
 
 ---
