@@ -1,8 +1,8 @@
 # Quantifying the Relationship of Nutritional Values in Recipes
 
 by Megan Yu (mey010@ucsd.edu)
-UCSD DSC80 | View on GitHub: https://github.com/megan-e3/nutrition-metric-modeling
-mey010@ucsd.edu
+
+UCSD DSC80
 
 ---
 
