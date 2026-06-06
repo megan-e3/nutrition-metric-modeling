@@ -36,6 +36,7 @@ The number of rows in the merged dataset is 234429. The relevant columns used in
 - The proportion of recipes with carbohydrates (PDV) > 181.8 was calculated to be extremely small (only 0.01% of the dataset). Considering adults require approximately 275g of carbohydrates per day (1 PDV = 2.75g), 500g of carbs = 500 / 2.75 = 181.8 PDV.
 
 The following table is the first 5 rows of the cleaned dataframe, with most of the columns omitted due to space constraints.
+
 | name | id | minutes | contributor_id | sodium_PDV | protein_PDV | saturated_fat_PDV | carbohydrates_PDV |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 brownies in the world best ever | 333281 | 40 | 985201 | 3.0 | 3.0 | 19.0 | 6.0 |
@@ -56,7 +57,11 @@ This analysis examines the distribution of recipe steps. The histogram shows a r
 **Bivariate Analysis**
 This analysis examines the relationship between recipe steps and protein content. The binned histogram shows that average protein content are spread across the number of recipe steps, with a rise at around 50 recipe steps for the highest protein levels.
 
-<iframe src="/assets/plots/avg_protein_step_distribution.html" width="100%" height="600px" frameborder="0"></iframe>
+<iframe src="{{ '/assets/plots/avg_protein_step_distribution.html' | relative_url }}"
+        width="100%"
+        height="600"
+        frameborder="0">
+</iframe>
 
 **Interesting Aggregates**
 Recipe steps were grouped into bins (1-5, 6-10, 11-15, and 16+) to aggregate and compare the mean, median, standard deviation, and count of protein content, along with the average number of steps within each bin.
@@ -70,15 +75,67 @@ Recipe steps were grouped into bins (1-5, 6-10, 11-15, and 16+) to aggregate and
 
 ## Assessment of Missingness
 
-Lorem
+**NMAR Analysis**
+After analyzing missingness across the entire dataset, only the rating column contained a non-trivial proportion of missing values (~6.3%). I believe *rating* is "**NMAR**" because the probability of a missing rating likely depends on the value itself. Users who had a negative or neutral experience to the recipe may be less motivated to leave a rating compared to people who loved the recipe. To make this "MAR," instead of "NMAR," additional data like whether the user saved the recipe and left a review without a numerical rating would be needed to help explain the missingness.
+
+**Missingness Dependency** 
+Missingness Dependency was analyzed and tested for rating's potential dependency on `n_steps` and `minutes`.
+
+First, rating and n_steps.
+- Null Hypothesis: The missingness of the rating column does not depend on the recipe's number of steps.
+- Alternate Hypothesis: The missingness of the rating column does depend on the recipe's number of steps.
+- Test Statistic: Absolute difference in mean steps between missing and non-missing rating groups
+- Significance Level: α = 0.05
+
+The permutation test for missingness dependency on n_steps resulted in rejecting the null hypothesis (p < 0.05), indicating that recipes with missing ratings have a significantly different number of steps compared to those with observed ratings.
+
+Next, rating and minutes.
+- Null Hypothesis: The missingness of the rating column does not depend on the recipe's minutes to prepare recipe.
+- Alternate Hypothesis: The missingness of the rating column does depend on the recipe's minutes to prepare recipe.
+- Test Statistic / Significance Level: Same as the previous.
+
+<iframe src="{{ '/assets/plots/fig_mar_mins_distribution.html' | relative_url }}"
+        width="100%"
+        height="600"
+        frameborder="0">
+</iframe>
+
+However, the test for dependency on minutes failed to reject the null hypothesis (p > 0.05). Preparation time likely does not differ between missing and observed rating groups, since rating missingness is associated with recipe complexity, such as number of steps, but not the time needed to make the meal. This supports handling missing ratings as potentially NMAR with respect to recipe structure.
 
 ## Hypothesis Testing
 
-Lorem
+**The main question in this section is as follows**: *What is the relationship between protein content and number of steps in a recipe?*
+
+I implemented a permutation test with the following hypotheses, test statistic, significance level:
+- ***Null Hypothesis***: There is no significant relationship between the protein content and number of steps in a recipe.
+- ***Alternative Hypothesis***: There is a significant relationship between the protein content and number of steps in a recipe.
+- ***Test Statistic***: Absolute difference in mean protein content between recipes with high and low step counts.
+- ***Significance Level***: α = 0.05
+
+To justify the choices above:
+- The absolute difference in means was chosen as the test statistic because it is a direct measure of how protein content differs between simpler and complex recipes.
+- A permutation test was chosen because it is robust for large datasets with potential outliers.
+- The significance level of α = 0.05 is a standard threshold for Type I and Type II errors.
+
+Resulting ***p-value***: The permutation test resulted in a p-value < 0.05, with a p-value extremely close to 0, because nearly none of the permuted differences reached the observed difference of 10.45 PDV. To **conclude**, based on the permutation test, we can reject the null hypothesis that there may be a statistically significant relationship between protein content and the number of steps in a recipe. 
+
+Recipes with a higher number of steps tend to have ~ 10.6 PDV more protein on average compared to recipes with fewer steps, but a permutation test alone cannot fully prove that an association exists in the observed data.
 
 ## Framing a Prediction Problem
 
-Lorem
+I built a **regression** model to predict the total calorie count *calories (#)* as a measure of the nutritional value of a recipe, because calories are expressed as continuous numerical values, not discrete categories. 
+
+I chose *calories (#)* as the **response variable** because calories can help users with meal planning and differ from subjective measures like *ratings*, making it an objective, quantifiable feature of the recipe. Predicting calorie content may also provide further insights into my earlier analysis of *protein (PDV)*, another macronutrient.
+
+A user would need to know certain information about recipe before cooking or accessing the full nutritional information, so I included the following features which would only be known at the ***time of prediction***.
+
+**Features Used**:
+- *n_steps* : number of preparation steps
+- *minutes* : total preparation time
+
+These features are known by the recipe author and are independent of calorie calculation. I hypothesize that recipes with longer cook times and more steps may indicate greater recipe complexity and longer cooking durations for meats, which tend to have higher calorie counts.
+
+To evaluate my model, I will use the metric **RMSE (Root Mean Squared Error)**, because it penalizes large errors in the difference between the actual and predicted number of calories. Since R-squared does not measure the magnitude of prediction errors, **RMSE** is an appropriate metric for measuring large mistakes in predicting calorie content.
 
 ## Baseline Model
 
